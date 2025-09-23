@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+neuralprophet
+pandas
+scikit-learn
+pydantic
