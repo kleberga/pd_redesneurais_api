@@ -7,11 +7,7 @@ import torch
 
 app = FastAPI()
 
-# model = load("model/neuralprophet_model.np")
-
-model = torch.load('model/neuralprophet_model.np', map_location='cpu')
-
-
+model = load("model/neuralprophet_model.np")
 df = pd.read_json('database/df_hist.json',  orient='records', lines=True)
 df = df.sort_values('datetime').copy()
 ult_data = pd.to_datetime(df["datetime"].max())
