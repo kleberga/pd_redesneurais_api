@@ -8,26 +8,30 @@ df = df.sort_values('datetime').copy()
 ult_data = df["datetime"].max()
 df = df.rename(columns={'datetime': 'ds', 'close': 'y'})
 
-class ForecastInput(BaseModel):
-    selic: list
-    cambio: list
-    prod_petroleo: list
-    cotacao_petroleo: list
+print(df.tail())
 
-data = ForecastInput(
-    selic = [14.9],
-    cambio = [5.3457],
-    prod_petroleo = [4031],
-    cotacao_petroleo = [67.88]
-)
+# class ForecastInput(BaseModel):
+#     selic: list
+#     cambio: list
+#     prod_petroleo: list
+#     cotacao_petroleo: list
+
+# data = ForecastInput(
+#     selic = [14.9],
+#     cambio = [5.3457],
+#     prod_petroleo = [4031],
+#     cotacao_petroleo = [67.88]
+# )
 
 
-df_forecast = pd.DataFrame({"ds": [ult_data+pd.Timedelta(days=1)], "selic": data.selic, "cambio": data.cambio, "prod_petroleo": data.prod_petroleo,
-                            "cotacao_petroleo": data.cotacao_petroleo, "y": [None]})
+# df_forecast = pd.DataFrame({"ds": [ult_data+pd.Timedelta(days=1)], "selic": data.selic, "cambio": data.cambio, "prod_petroleo": data.prod_petroleo,
+#                             "cotacao_petroleo": data.cotacao_petroleo, "y": [None]})
 
-df_2 = pd.concat([df, df_forecast], ignore_index=True)
+# df_2 = pd.concat([df, df_forecast], ignore_index=True)
 
-df_2 = df_2.sort_values('ds').copy()
+# df_2 = df_2.sort_values('ds').copy()
+
+df_2 = df.sort_values('ds').copy()
 
 print(df_2.tail())
 

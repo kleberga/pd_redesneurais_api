@@ -13,21 +13,17 @@ df = df.sort_values('datetime').copy()
 ult_data = pd.to_datetime(df["datetime"].max())
 df = df.rename(columns={'datetime': 'ds', 'close': 'y'})
 
-class ForecastInput(BaseModel):
-    selic: list
-    cambio: list
-    prod_petroleo: list
-    cotacao_petroleo: list
-
 @app.get("/forecast")
-def forecast(data: ForecastInput):
+def forecast():
 
-    df_forecast = pd.DataFrame({"ds": [ult_data+pd.Timedelta(days=1)], "selic": data.selic, "cambio": data.cambio, "prod_petroleo": data.prod_petroleo,
-                       "cotacao_petroleo": data.cotacao_petroleo, "y": [None]})
+    df_forecast = pd.DataFrame({"ds": [ult_data+pd.Timedelta(days=1)], "selic": [None], "cambio": [None], "prod_petroleo": [None],
+                       "cotacao_petroleo": [None], "y": [None]})
     
     df_2 = pd.concat([df, df_forecast], ignore_index=True)
 
     df_2 = df_2.sort_values('ds').copy()
+
+    print(df_2.tail())
 
     scaler_x = MinMaxScaler()
     scaler_y = MinMaxScaler()
