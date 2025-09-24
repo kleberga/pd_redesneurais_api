@@ -29,6 +29,8 @@ df_2 = pd.concat([df, df_forecast], ignore_index=True)
 
 df_2 = df_2.sort_values('ds').copy()
 
+print(df_2.tail())
+
 # df_2.drop(columns=['ds'], inplace=True)
 
 scaler_x = MinMaxScaler()
@@ -56,6 +58,9 @@ df_4 = df_3.tail(11).copy()
 
 model = load("model/neuralprophet_model.np")
 forecast = model.predict(df_4)
+
+print(forecast.tail())
+
 yhat = forecast[['ds','yhat1']].iloc[-1]
 df_3['y'].iloc[-1] = yhat['yhat1']
 

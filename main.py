@@ -60,3 +60,7 @@ def forecast(data: ForecastInput):
     df_with_forecast = pd.DataFrame([{yhat['ds'], target_2_actual[-1][0]}], columns=['ds','yhat'])
 
     return df_with_forecast.to_dict(orient="records")
+
+@app.get("/ult_data")
+def get_ult_data():
+    return ult_data
