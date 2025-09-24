@@ -54,7 +54,7 @@ df_4 = df_3.tail(11).copy()
 
 # print(df_3)
 
-model = load("model/neuralprophet_model.np")
+model = load("content/neuralprophet_model.np")
 forecast = model.predict(df_4)
 yhat = forecast[['ds','yhat1']].iloc[-1]
 df_3['y'].iloc[-1] = yhat['yhat1']
