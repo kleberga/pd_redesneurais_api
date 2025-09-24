@@ -59,7 +59,8 @@ def forecast(data: ForecastInput):
     target_2_actual = scaler_y.inverse_transform(target_2.values.reshape(-1, 1))
     df_with_forecast = pd.DataFrame([{yhat['ds'], target_2_actual[-1][0]}], columns=['ds','yhat'])
 
-    return df_with_forecast.to_dict(orient="records")
+    df_4 = df_2.dropna().copy()
+    return {'projecao': df_with_forecast.to_dict(orient="records"), 'dados': df_4.to_dict(orient='records')}
 
 @app.get("/ult_data")
 def get_ult_data():
