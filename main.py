@@ -3,10 +3,15 @@ from pydantic import BaseModel
 import pandas as pd
 from neuralprophet import load
 from sklearn.preprocessing import MinMaxScaler
+import torch
 
 app = FastAPI()
 
-model = load("model/neuralprophet_model.np")
+# model = load("model/neuralprophet_model.np")
+
+model = torch.load('model/neuralprophet_model.np', map_location='cpu')
+
+
 df = pd.read_json('database/df_hist.json',  orient='records', lines=True)
 df = df.sort_values('datetime').copy()
 ult_data = pd.to_datetime(df["datetime"].max())

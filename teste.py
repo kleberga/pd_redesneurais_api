@@ -1,7 +1,7 @@
 import pandas as pd
 from pydantic import BaseModel
 from sklearn.preprocessing import MinMaxScaler
-from neuralprophet import load
+from neuralprophet import load, NeuralProphet, save
 
 df = pd.read_json('database/df_hist.json',  orient='records', lines=True)
 df = df.sort_values('datetime').copy()
@@ -54,7 +54,6 @@ df_4 = df_3.tail(11).copy()
 
 # print(df_3)
 
-
 model = load("model/neuralprophet_model.np")
 forecast = model.predict(df_4)
 yhat = forecast[['ds','yhat1']].iloc[-1]
@@ -68,6 +67,7 @@ target_2_actual = scaler_y.inverse_transform(target_2.values.reshape(-1, 1))
 # print(yhat['ds'])
 
 df_with_forecast = pd.DataFrame([{yhat['ds'], target_2_actual[-1][0]}], columns=['ds','yhat'])
+print(df_with_forecast)
 # print(target_2_actual)
 # print(target.tail())
 # print(features.tail())
