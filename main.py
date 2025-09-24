@@ -19,7 +19,7 @@ class ForecastInput(BaseModel):
     prod_petroleo: list
     cotacao_petroleo: list
 
-@app.post("/forecast")
+@app.get("/forecast")
 def forecast(data: ForecastInput):
 
     df_forecast = pd.DataFrame({"ds": [ult_data+pd.Timedelta(days=1)], "selic": data.selic, "cambio": data.cambio, "prod_petroleo": data.prod_petroleo,
