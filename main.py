@@ -133,7 +133,6 @@ def forecast():
 
     df = carrega_dados()
 
-    print(df.tail())
     ult_data = df["datetime"].max()
 
     df = df.rename(columns={'datetime': 'ds', 'close': 'y'})
@@ -178,8 +177,6 @@ def forecast():
 
     df_4 = df_2.dropna().copy()
 
-    print(df_with_forecast)
-    print(df_with_forecast.to_dict(orient="records"))
     return {'projecao': df_with_forecast.to_dict(orient="records"), 'dados': df_4.to_dict(orient='records')}
 
 @app.get("/ult_data")
