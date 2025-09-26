@@ -12,6 +12,8 @@ ult_data = df["datetime"].max()
 hoje = date.today()
 delta = hoje - ult_data.date()
 
+print(ult_data.date())
+
 if(delta.days > 1):
 
     petr4 = yf.Ticker('PETR4.SA')

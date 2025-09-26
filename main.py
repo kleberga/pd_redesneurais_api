@@ -186,4 +186,5 @@ def forecast():
 def get_ult_data():
     df = carrega_dados()
     ult_data = df["datetime"].max()
+    ult_data = ult_data.date()
     return ult_data
