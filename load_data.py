@@ -2,7 +2,7 @@ import pandas as pd
 import re
 import requests
 
-cota2025 = pd.read_csv("C:/Users/Kleber/Downloads/COTAHIST_A2025/COTAHIST_A2025.TXT")
+cota2025 = pd.read_csv("C:/Users/Kleber/Downloads/COTAHIST_A2025.TXT")
 
 # funcao para extrair os caracteres até aparecer o primeiro espaço
 def extract_from_pos_until_space(s, start=12):
@@ -120,12 +120,15 @@ df_2025_alt_2 = pd.merge(df_2025_alt_2, cambio_2025, how='left', left_on='dateti
 df_2025_alt_2 = pd.merge(df_2025_alt_2, prod_petr_diaria, how='left', left_on='datetime', right_on='data').drop(columns=['data'])
 df_2025_alt_2 = pd.merge(df_2025_alt_2, petroleo, how='left', left_on='datetime', right_on='data').drop(columns=['data'])
 
-df_2025_alt_2['prod_petroleo'] = df_2025_alt_2['prod_petroleo'].fillna(method='ffill')
-df_2025_alt_2['cotacao_petroleo'] = df_2025_alt_2['cotacao_petroleo'].fillna(method='ffill')
+
+df_2025_alt_2['prod_petroleo'] = df_2025_alt_2['prod_petroleo'].ffill()
+df_2025_alt_2['cotacao_petroleo'] = df_2025_alt_2['cotacao_petroleo'].ffill()
 
 # carregar a base de dados históricos e concatenar os dados ==========================================
 
-df_hist = pd.read_json("database/df_final_petr_np.json")
+df_hist = pd.read_json("database/df_hist.json", orient='records', lines=True)
+
+df_hist = df_hist[df_hist['datetime']<=pd.to_datetime('2025-09-15')]
 
 df_2025_alt_2 = df_2025_alt_2[df_2025_alt_2['datetime']>(max(df_hist['datetime']))]
 
@@ -135,7 +138,4 @@ df_hist_2 = pd.concat([df_hist, df_2025_alt_2], ignore_index=True)
 
 df_hist_2.dropna(inplace=True)
 
-df_hist_2.to_json('df_hist.json', orient='records', lines=True)
-
-
-
+df_hist_2.to_json('database/df_hist.json', orient='records', lines=True)
