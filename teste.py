@@ -192,7 +192,9 @@ model = load("model/neuralprophet_model.np")
 forecast = model.predict(df_4)
 
 yhat = forecast[['ds','yhat1']].iloc[-1]
-df_3['y'].iloc[-1] = yhat['yhat1']
+
+# df_3['y'].iloc[-1] = yhat['yhat1']
+df_3.loc[-1, "y"] = yhat['yhat1']
 
 target_2 = df_3['y']
 
