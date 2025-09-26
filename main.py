@@ -176,6 +176,8 @@ def forecast():
     df_with_forecast = pd.DataFrame([{yhat['ds'], target_2_actual[-1][0]}], columns=['ds','yhat'])
 
     df_4 = df_2.dropna().copy()
+
+    print(df_with_forecast)
     return {'projecao': df_with_forecast.to_dict(orient="records"), 'dados': df_4.to_dict(orient='records')}
 
 @app.get("/ult_data")
